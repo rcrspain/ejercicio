@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego del Ahorcado</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,400;1,100;1,200&display=swap");
+        * {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        body {
+            font-family: "Kanit", sans-serif;
+            background: linear-gradient(150deg, #fff102, #f10271, #00c298);
+            background-size: 400% 300%;
+            animation: efectomov 5s ease infinite;
+        }
+        
+        @keyframes efectomov {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        #comprobar {
+            width: 20%;
+            margin: 0.2rem auto;
+            padding: 0.5rem;
+            font-family: "Kanit", sans-serif;
+            letter-spacing: 8px;
+            text-align: center;
+            background: linear-gradient(150deg, cadetblue, aquamarine, aqua);
+            background-size: 400% 300%;
+            animation: efectomov 5s ease infinite;
+            border-radius: 10px;
+        }
+        
+        #comprobar:hover {
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 3px;
+            background-color: darkgrey;
+        }
+        
+        .titulo {
+            text-align: center;
+            font-size: 5rem;
+            padding: 0.5rem;
+            background-image: url(img/juego-ahorcado-art.jpg);
+            background-size: 100% 100%;
+            width: 80%;
+            margin: 0 auto 1rem auto;
+            text-shadow: 3px 3px 3px chartreuse;
+        }
+        
+        .titulo2 {
+            text-align: center;
+            font-size: 3rem;
+            padding: 0.1rem;
+            background-color: cadetblue;
+            width: 45%;
+            margin: 0.2rem auto;
+            text-shadow: 3px 3px 3px chartreuse;
+        }
+        
+        #pedir_datos {
+            margin: auto;
+            width: 65%;
+            background-color: aquamarine;
+        }
+        
+        #pedir_datos::backdrop {
+            background-image: url(img/juegoahorcado_fondo.jpg);
+            background-size: 100% 100%;
+        }
+        
+        .panel {
+            width: 71%;
+            display: flex;
+            flex-wrap: wrap;
+            margin: auto;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .panel label,
+        .panel button {
+            width: 100%;
+            margin: 0.5rem;
+            font-size: 2rem;
+            text-align: initial;
+        }
+        
+        #nombre,
+        #frase,
+        #intentos {
+            font-family: "Kanit", sans-serif;
+            font-size: 3rem;
+            text-align: center;
+        }
+        
+        #intentos {
+            width: 20%;
+        }
+        
+        .panel_frase {
+            width: 80%;
+            text-align: center;
+            font-size: 5rem;
+            letter-spacing: 20px;
+            margin: 1rem auto;
+            background-color: cadetblue;
+            padding: 0.2rem;
+            word-wrap: break-Word;
+        }
+        
+        .panel_letra {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            margin: 1rem auto;
+            justify-content: center;
+            width: 80%;
+            background-color: cadetblue;
+            padding: 0.2rem;
+        }
+        
+        #letra_txt {
+            width: 10%;
+            font-size: 5rem;
+            border: 3px solid bisque;
+            border-radius: 50%;
+            text-align: center;
+            padding: 0.5rem 0.5rem 1.3rem;
+            margin: 0.5rem auto;
+            background-color: black;
+            color: antiquewhite;
+        }
+        
+        .panel_letra p {
+            font-size: 3rem;
+            text-align: center;
+        }
+        
+        .panel_letra h3 {
+            text-align: center;
+            margin: 0.5rem auto;
+            width: 80%;
+            font-size: 4.5rem;
+        }
+        
+        #panel_resultados {
+            display: flex;
+            flex-wrap: wrap;
+            width: 80%;
+            margin: 0 auto;
+        }
+        
+        #panel_final {
+            margin: auto;
+            width: 60%;
+            text-align: center;
+            font-size: 2rem;
+            background-image: url(img/funny-celebrate-28.gif);
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            padding: 4rem;
+        }
+        
+        #panel_final button {
+            font-size: 1.5rem;
+            width: 10%;
+            padding: 0.2rem;
+            margin: 0.5rem 1rem;
+            background: linear-gradient(150deg, cadetblue, aquamarine, aqua);
+            background-size: 400% 300%;
+            animation: efectomov 5s ease infinite;
+            border-radius: 10px;
+            letter-spacing: 4px;
+        }
+        
+        #panel_final button:hover {
+            letter-spacing: 0px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .letras-acertadas,
+        .letras-falladas {
+            text-align: center;
+            width: 45%;
+            margin: 0.2rem auto;
+            font-size: 3rem;
+            color: green;
+            background-color: aquamarine;
+            padding: 0.2rem;
+        }
+        
+        .letras-falladas {
+            color: red;
+        }
+        
+        #start {
+            text-align: center;
+            margin: 0.5rem auto;
+            padding: 0.5rem;
+            border-radius: 10px;
+            background: cadetblue;
+            letter-spacing: 5px;
+            font-size: 1.4rem;
+        }
+        
+        #start:hover {
+            background-color: crimson;
+            color: antiquewhite;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 0px;
+        }
+        
+        .opaco {
+            background-color: rgb(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 1rem 2rem;
+        }
+        
+        .aumentar {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="contenedor">
+        <h1 class="titulo">juego del ahorcado</h1>
+        <dialog id="pedir_datos">
+            <div class="panel">
+                <label for="nombre" class="label_nombre">Dime tu nombre: <input type="text" id="nombre"
+          /></label>
+                <label for="frase">Dame la frase a Buscar: <input type="text" id="frase"
+          /></label>
+                <label for="intentos">Número de Intentos: <input type="number" id="intentos"
+          /></label>
+                <button id="start" onclick="compruebaFrase()">EMPIEZA A JUGAR</button>
+            </div>
+        </dialog>
+
+        <div class="panel_frase"></div>
+        <div class="panel_letra">
+            <p>Introduce una letra</p>
+            <input type="text" name="" id="letra_txt" size="1" maxlength="1" onchange="cogeLetra()" />
+            <button id="comprobar" onclick="cogeLetra()">Comprobar</button>
+        </div>
+        <div id="panel_resultados">
+            <h3 class="titulo2">Acertadas</h3>
+            <div class="letras-acertadas"></div>
+            <h3 class="titulo2">Falladas</h3>
+            <div class="letras-falladas"></div>
+        </div>
+        <dialog id="panel_final"></dialog>
+    </div>
+    <dialog id="mensajes_error"></dialog>
+    <script>
+        let palabra_limpia = "";
+        let frase_user = "";
+        let casillero = "";
+        let acertadas = "";
+        let falladas = "";
+        let total_letras = 0;
+        let espacios = 0;
+        let letras_ocultas = 0;
+        let letras_encontradas = 0;
+        let nombre_jugador = document
+            .getElementById("nombre")
+            .value.toUpperCase();
+        let panel_datos = document.getElementById("pedir_datos");
+        let intro_letra = document.getElementById("letra_txt");
+        let num_intentos = document.getElementById("intentos");
+        let marco_final = document.getElementById("panel_final");
+        let victoria = false;
+        let error = 0;
+        let acierto = 0;
+        let ruta1 = "img/funny-celebrate-28.gif";
+        let ruta2 = "img/derrota.gif";
+
+        function mostrarPanelDatos() {
+            panel_datos.showModal();
+        }
+        window.onload = mostrarPanelDatos();
+        posicionInput();
+
+        function compruebaFrase() {
+            panel_datos.close();
+            intro_letra.textContent = "";
+            intro_letra.focus();
+
+            let frase_intro = document.getElementById("frase").value;
+            if (frase_intro.length >= 3) {
+                frase_user = quitaEspacios(frase_intro);
+                // if (frase_user.length < 5) {
+                //     alert("Ese texto no es válido");
+                // } else {
+                creaPalabra(frase_user);
+                total_letras = frase_user.length;
+                letras_ocultas = total_letras - espacios;
+                console.log(letras_ocultas);
+                // }
+            } else {
+                alert(
+                    "Escribe como mínimo 3 caracteres en la FRASE para poder jugar"
+                );
+                mostrarPanelDatos();
+            }
+        }
+
+        function quitaEspacios(texto) {
+            texto = texto.trim();
+            do {
+                texto = texto.replaceAll("  ", " ");
+            } while (texto.indexOf("  ") != -1);
+            return texto;
+        }
+
+        function creaPalabra(palabra_sucia) {
+            for (let i = 0; i < palabra_sucia.length; i++) {
+                let letra_user = palabra_sucia[i];
+                palabra_limpia += quitaTildes(letra_user);
+
+                if (letra_user == " ") {
+                    casillero += String.fromCharCode(8226);
+                    espacios++;
+                    continue;
+                }
+                casillero += String.fromCharCode(8212);
+            }
+            document.querySelector(".panel_frase").textContent = casillero;
+        }
+
+        function cogeLetra() {
+            //let intro_letra = document.querySelector("#letra_txt");
+            intentos = num_intentos.value;
+            let intro = intro_letra.value;
+            if (intro == " " || intro == "") {
+                posicionInput();
+                return;
+            }
+            intro = quitaTildes(intro);
+            if (acertadas.indexOf(intro) != -1 || falladas.indexOf(intro) != -1) {
+                alert("Letra ya introducida");
+                posicionInput();
+                return;
+            }
+
+            if (palabra_limpia.indexOf(intro) != -1) {
+                acertadas += intro;
+                acierto++;
+                document.querySelector(".letras-acertadas").textContent = acertadas;
+                posicionInput();
+                muestraLetras(intro);
+            } else {
+                falladas += intro;
+                error++;
+                console.log(error, intentos);
+                document.querySelector(".letras-falladas").textContent = falladas;
+                posicionInput();
+                if (error == intentos) {
+                    victoria = false;
+                    finalJuego(victoria);
+                }
+                //falloLetra(intro);
+            }
+            // posicionInput();
+        }
+
+        function muestraLetras(letra) {
+            casillero = casillero.split("");
+            for (let i = 0; i < palabra_limpia.length; i++) {
+                let caracter = palabra_limpia[i];
+                if (caracter == letra) {
+                    letras_encontradas++;
+
+                    casillero[i] = frase_user[i];
+                    continue;
+                }
+            }
+            casillero = casillero.join("");
+            document.querySelector(".panel_frase").textContent = casillero;
+
+            if (letras_encontradas == letras_ocultas) {
+                victoria = true;
+                finalJuego(victoria);
+            }
+        }
+
+        function posicionInput() {
+            document.querySelector("#letra_txt").value = "";
+            document.querySelector("#letra_txt").focus();
+        }
+
+        function finalJuego(final) {
+            if (victoria) {
+                marco_final.showModal();
+                document.getElementById("panel_final").style.backgroundImage =
+                    "url(" + ruta1 + ")";
+                marco_final.innerHTML = "";
+                let letrero = `<div class='opaco'><p>Felicidades <span class="aumentar">${nombre_jugador}</span> has GANADO!!!</p>
+                                <p>Has utilizado un total de ${acierto} intentos con solo ${error} fallos</p>
+                                    <p>ERES UN CRACK!!!!</p>
+                                    <p>¿QUIERES VOLVER A JUGAR?</p>
+                                    <button onclick=volverJugar()>SI</button><button onclick=window.close() >NO</button></div>`;
+                marco_final.innerHTML = letrero;
+            } else {
+                marco_final.showModal();
+                document.getElementById("panel_final").style.backgroundImage =
+                    "url(" + ruta2 + ")";
+                marco_final.innerHTML = "";
+                let letrero = `<div class='opaco'><p>Pero <span class="aumentar">${nombre_jugador}</span>... Has PERDIDO!!!</p>
+                                <p>Has usado los ${error} intentos que tenias y solo has acertado ${acierto} letras de la frase oculta que era tan sencilla como "<span class="aumentar">${frase_user}"</span></p>
+                                    <p>ERES UN PAQUETE!!!!</p>
+                                    <p>¿QUIERES VOLVER A JUGAR?</p>
+                                    <button onclick=volverJugar()>SI</button><button onclick=window.close() >NO</button></div>`;
+                marco_final.innerHTML = letrero;
+            }
+        }
+
+        function volverJugar() {
+            marco_final.close();
+            palabra_limpia = "";
+            frase_user = "";
+            casillero = "";
+            acertadas = "";
+            falladas = "";
+            total_letras = 0;
+            espacios = 0;
+            letras_ocultas = 0;
+            letras_encontradas = 0;
+            victoria = false;
+            error = 0;
+            acierto = 0;
+            document;
+            document.getElementById("nombre").style.display = "none";
+            document.querySelector(".label_nombre").style.display = "none";
+            document.getElementById("frase").value = "";
+            num_intentos.value = "";
+            document.querySelector(".letras-acertadas").textContent = "";
+            document.querySelector(".letras-falladas").textContent = "";
+
+            mostrarPanelDatos();
+        }
+
+        function quitaTildes(entrada) {
+            let salida;
+            entrada = entrada.toLowerCase();
+            switch (entrada) {
+                case "á":
+                case "à":
+                    salida = "a";
+                    break;
+                case "é":
+                case "è":
+                    salida = "e";
+                    break;
+                case "í":
+                case "ì":
+                    salida = "i";
+                    break;
+                case "ó":
+                case "ò":
+                    salida = "o";
+                    break;
+                case "ú":
+                case "ù":
+                case "ü":
+                    salida = "u";
+                    break;
+                default:
+                    salida = entrada;
+                    break;
+            }
+            return salida;
+        }
+    </script>
+</body>
+
+</html>
